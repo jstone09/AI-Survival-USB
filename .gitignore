@@ -1,0 +1,23 @@
+# AI Models (too large for GitHub)
+ollama/models/
+*.bin
+*.gguf
+
+# Ollama binaries (users download these themselves)
+ollama.exe
+ollama app.exe
+lib/
+
+# Kiwix data files
+*.zim
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Installer artifacts
+unins000.*
+
+# User notes
+*.msg
