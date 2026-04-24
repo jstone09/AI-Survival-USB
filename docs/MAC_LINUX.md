@@ -53,7 +53,10 @@ Make it executable: `chmod +x start.sh`
 
 ### Install Ollama
 ```bash
-curl -fsSL https://ollama.com/install.sh | sh
+curl -fsSL https://ollama.com/install.sh -o install.sh
+# Review the script
+# cat install.sh
+sh install.sh
 ```
 
 ### Set Up on USB Drive
