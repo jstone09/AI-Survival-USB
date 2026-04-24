@@ -131,6 +131,7 @@ G:\ (256GB USB Drive)
 │
 ├── start.bat                     ← Launch AI
 ├── stop.bat                      ← Shut down
+├── kill_ollama.bat               ← Kill utility
 └── README.txt                    ← Quick reference
 ```
 

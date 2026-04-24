@@ -185,12 +185,13 @@ sha256-ea025c107c1c3e5a87380b25e205d...    4,551,976 KB (~4.5 GB)
 
 ### STEP 4 — Add the Launch Scripts
 
-Copy the two scripts from this repo's `scripts/` folder onto the **root** of your USB:
+Copy the three scripts from this repo's `scripts/` folder onto the **root** of your USB:
 
 | File | Purpose |
 |------|---------|
 | **[start.bat](scripts/start.bat)** | 🟢 Double-click to launch the AI |
 | **[stop.bat](scripts/stop.bat)** | 🔴 Double-click to shut it down |
+| **[kill_ollama.bat](scripts/kill_ollama.bat)** | 🛠️ Helper script to stop AI processes |
 
 Or download this whole repo as a ZIP (green "Code" button → "Download ZIP") and copy the scripts out.
 
@@ -253,6 +254,7 @@ G:\ (Your USB Drive)
 │
 ├── start.bat                         ← 🟢 LAUNCH THE AI
 ├── stop.bat                          ← 🔴 SHUT IT DOWN
+├── kill_ollama.bat                   ← 🛠️ Helper script to stop AI processes
 └── README.txt                        ← Quick reference card
 ```
 
