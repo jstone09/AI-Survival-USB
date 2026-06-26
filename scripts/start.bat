@@ -20,7 +20,10 @@ echo  [INFO] Drive detected: %DRIVE%
 
 REM --- Set model storage to USB drive ---
 set OLLAMA_MODELS=%DRIVE%\ollama\models
+if "%OLLAMA_PORT%"=="" set OLLAMA_PORT=11434
+set OLLAMA_HOST=127.0.0.1:%OLLAMA_PORT%
 echo  [INFO] Model path: %OLLAMA_MODELS%
+echo  [INFO] Ollama port: %OLLAMA_PORT%
 echo.
 
 REM --- Verify ollama.exe exists ---
@@ -74,7 +77,7 @@ if %ATTEMPTS% GTR 60 (
     exit /b 1
 )
 timeout /t 2 /nobreak >nul
-netstat -an 2>nul | find "LISTENING" | find ":11434" >nul 2>&1
+netstat -an 2>nul | find "LISTENING" | find ":%OLLAMA_PORT%" >nul 2>&1
 if errorlevel 1 (
     echo  Loading... [%ATTEMPTS%/60]
     goto waitloop
