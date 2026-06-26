@@ -27,7 +27,9 @@ if ! command -v ollama &> /dev/null; then
     echo "  [ERROR] Ollama is not installed on this system."
     echo "  Install it first:"
     echo "    Mac:   brew install ollama"
-    echo "    Linux: curl -fsSL https://ollama.com/install.sh | sh"
+    echo "    Linux: curl -fsSL -o install.sh https://ollama.com/install.sh"
+    echo "           cat install.sh"
+    echo "           sh install.sh"
     echo ""
     exit 1
 fi
