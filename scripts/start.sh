@@ -48,7 +48,7 @@ SERVER_PID=$!
 
 # Wait for server
 echo "  [2/3] Waiting for server..."
-for i in $(seq 1 60); do
+for ((i=1; i<=60; i++)); do
     if curl -s http://localhost:11434/api/version > /dev/null 2>&1; then
         break
     fi
