@@ -74,7 +74,7 @@ if %ATTEMPTS% GTR 60 (
     exit /b 1
 )
 timeout /t 2 /nobreak >nul
-netstat -an 2>nul | find "LISTENING" | find ":11434" >nul 2>&1
+powershell -NoProfile -ExecutionPolicy Bypass -Command "if (!(Test-NetConnection 127.0.0.1 -Port 11434 -InformationLevel Quiet)) { exit 1 }" >nul 2>&1
 if errorlevel 1 (
     echo  Loading... [%ATTEMPTS%/60]
     goto waitloop
