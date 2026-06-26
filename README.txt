@@ -6,12 +6,14 @@
 HOW TO START:
   1. Plug this USB into any Windows PC (8GB+ RAM)
   2. Double-click: start.bat
+     (Requires kill_ollama.bat to be in the same folder)
   3. Wait ~30 seconds for AI to load
   4. Type your question and press Enter
   5. Type /bye to exit
 
 HOW TO STOP:
   Double-click: stop.bat
+  (Requires kill_ollama.bat to be in the same folder)
   Then safely eject the USB drive
 
 EXAMPLE QUESTIONS:

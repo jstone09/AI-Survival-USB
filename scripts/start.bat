@@ -50,9 +50,7 @@ if not exist "%DRIVE%\ollama\models" (
 )
 
 REM --- Kill any existing Ollama processes ---
-taskkill /f /im ollama.exe >nul 2>&1
-taskkill /f /im "ollama app.exe" >nul 2>&1
-timeout /t 2 /nobreak >nul
+call "%~dp0kill_ollama.bat"
 
 REM --- Start the Ollama server in background ---
 echo  [1/3] Starting Ollama server...
