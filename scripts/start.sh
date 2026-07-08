@@ -6,6 +6,8 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 export OLLAMA_MODELS="$SCRIPT_DIR/ollama/models"
+export OLLAMA_PORT="${OLLAMA_PORT:-11434}"
+export OLLAMA_HOST="${OLLAMA_HOST:-localhost}"
 
 echo ""
 echo "  ============================================================"
@@ -48,8 +50,13 @@ SERVER_PID=$!
 
 # Wait for server
 echo "  [2/3] Waiting for server..."
-for i in $(seq 1 60); do
-    if curl -s http://localhost:11434/api/version > /dev/null 2>&1; then
+if [[ "${OLLAMA_HOST}" == *":"* ]]; then
+    SERVER_URL="http://${OLLAMA_HOST}/api/version"
+else
+    SERVER_URL="http://${OLLAMA_HOST}:${OLLAMA_PORT}/api/version"
+fi
+for ((i=1; i<=60; i++)); do
+    if curl -s "$SERVER_URL" > /dev/null 2>&1; then
         break
     fi
     sleep 2
