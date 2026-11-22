@@ -6,6 +6,43 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 export OLLAMA_MODELS="$SCRIPT_DIR/ollama/models"
+export OLLAMA_PORT="${OLLAMA_PORT:-11434}"
+export OLLAMA_HOST="${OLLAMA_HOST:-localhost}"
+# Derive effective bind address (host:port) and base URL for readiness checks
+INPUT_HOST="${OLLAMA_HOST}"
+SCHEME=""
+if [[ "$INPUT_HOST" =~ ^https?:// ]]; then
+  if [[ "$INPUT_HOST" == https://* ]]; then
+    SCHEME="https"
+  else
+    SCHEME="http"
+  fi
+  TRIMMED="${INPUT_HOST%/}"
+  HOSTSPEC="${TRIMMED#http://}"
+  HOSTSPEC="${HOSTSPEC#https://}"
+  HOSTSPEC="${HOSTSPEC%%/*}"
+else
+  HOSTSPEC="$INPUT_HOST"
+  SCHEME=""
+fi
+# Ensure hostspec contains an explicit port; bracket IPv6 if needed
+if [[ "$HOSTSPEC" =~ ^\[.*\]:[0-9]+$ || "$HOSTSPEC" =~ :[0-9]+$ ]]; then
+  :
+else
+  if [[ "$HOSTSPEC" == *:* && "$HOSTSPEC" != \[*\] ]]; then
+    HOSTSPEC="[$HOSTSPEC]"
+  fi
+  HOSTSPEC="${HOSTSPEC}:${OLLAMA_PORT}"
+fi
+# Export effective host:port so both server and client use the same address
+export OLLAMA_HOST="$HOSTSPEC"
+# Build base URL preserving scheme if provided; otherwise default to http
+if [[ -n "$SCHEME" ]]; then
+  BASE_URL="${SCHEME}://${HOSTSPEC}"
+else
+  BASE_URL="http://${HOSTSPEC}"
+fi
+
 
 echo ""
 echo "  ============================================================"
@@ -48,8 +85,9 @@ SERVER_PID=$!
 
 # Wait for server
 echo "  [2/3] Waiting for server..."
-for i in $(seq 1 60); do
-    if curl -s http://localhost:11434/api/version > /dev/null 2>&1; then
+SERVER_URL="${BASE_URL}/api/version"
+for ((i=1; i<=60; i++)); do
+    if curl -s "$SERVER_URL" > /dev/null 2>&1; then
         break
     fi
     sleep 2
